@@ -1,0 +1,43 @@
+﻿@using ContosoCrafts.WebSite2.Services
+@using Microsoft.AspNetCore.Components.Web
+@using ContosoCrafts.Website2.Models
+@inject JsonFileProductService ProductService
+
+
+<div class="card-columns">
+    @foreach (var product in ProductService.GetProducts()) //pentru fiecare produs în lista de products se crează containere mai mici
+    {
+        <div class="card">
+            <div class="card-img" style="background-image: url('@product.img');">
+                <div class="card-body">
+                    <h5 class="card-title">@product.title</h5>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">
+                <button @onclick = "(e => SelectProduct(ProductId))"
+                    data-toggle="model" data-target="#productModal1" class="btn-primary">More Info</button>
+                    
+
+
+            </small>
+
+        </div>
+    }
+</div>
+
+@code {
+    Product selectProduct;
+    string selectProductId;
+
+    void SelectProduct (string productId)
+    {
+        selectProductId = productId;
+        selectProduct = ProductService.GetProducts().First(x => x.Id == productId);
+    }
+
+
+
+}
